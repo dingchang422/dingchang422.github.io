@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebXR VR Keyboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
+</head>
+<body>
+    <input type="text" id="vrInput" style="position: absolute; top: 10px; left: 10px; display: none;">
+    <script>
+        let scene, camera, renderer, button, xrSession;
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // 加入 WebXR 支援
+            renderer.xr.enabled = true;
+            navigator.xr.requestSession('immersive-vr', {
+                requiredFeatures: ['dom-overlay'],
+                domOverlay: { root: document.body }
+            }).then(session => {
+                xrSession = session;
+                renderer.xr.setSession(session);
+            });
+
+            // 創建 3D 按鈕
+            const geometry = new THREE.BoxGeometry(0.2, 0.1, 0.05);
+            const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+            button = new THREE.Mesh(geometry, material);
+            button.position.set(0, 1.5, -1);
+            scene.add(button);
+
+            animate();
+        }
+
+        function animate() {
+            renderer.setAnimationLoop(() => {
+                renderer.render(scene, camera);
+            });
+        }
+
+        function showKeyboard() {
+            const input = document.getElementById("vrInput");
+            input.style.display = "block";
+            input.focus();
+        }
+
+        window.addEventListener("click", (event) => {
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2(
+                (event.clientX / window.innerWidth) * 2 - 1,
+                -(event.clientY / window.innerHeight) * 2 + 1
+            );
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObject(button);
+            if (intersects.length > 0) {
+                showKeyboard();
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>
