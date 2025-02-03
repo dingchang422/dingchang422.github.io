@@ -5,29 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebXR VR Keyboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands"></script>
 </head>
 <body>
-    <input type="text" id="vrInput" style="position: absolute; top: 10px; left: 10px; display: none;">
+    <button id="enterVR" style="position: absolute; top: 10px; left: 10px;">Enter VR</button>
+    <input type="text" id="vrInput" style="position: absolute; top: 50px; left: 10px; display: none;">
     <script>
-        let scene, camera, renderer, button, xrSession;
+        let scene, camera, renderer, button;
 
         function init() {
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            scene.add(camera);
+
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.body.appendChild(renderer.domElement);
-
-            // 加入 WebXR 支援
             renderer.xr.enabled = true;
-            navigator.xr.requestSession('immersive-vr', {
-                requiredFeatures: ['dom-overlay'],
-                domOverlay: { root: document.body }
-            }).then(session => {
-                xrSession = session;
-                renderer.xr.setSession(session);
-            });
 
             // 創建 3D 按鈕
             const geometry = new THREE.BoxGeometry(0.2, 0.1, 0.05);
@@ -50,6 +43,15 @@
             input.style.display = "block";
             input.focus();
         }
+
+        document.getElementById("enterVR").addEventListener("click", () => {
+            navigator.xr.requestSession('immersive-vr', {
+                requiredFeatures: ['dom-overlay'],
+                domOverlay: { root: document.body }
+            }).then(session => {
+                renderer.xr.setSession(session);
+            });
+        });
 
         window.addEventListener("click", (event) => {
             const raycaster = new THREE.Raycaster();
