@@ -8,7 +8,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700;800&display=swap');
 
         body {
-            font-family: 'Verdana', sans-serif;
+            font-family: 'Roboto', sans-serif;
             background-repeat: no-repeat;
             background-size: cover;
             min-height: 100%;
@@ -25,7 +25,9 @@
         }
 
         .round-search {
-            margin-top: 56px;
+            font-feature-settings: "liga" 0, "kern" 1;
+			font-variant-ligatures: no-common-ligatures;
+			margin-top: 56px;
             margin-bottom: 56px;
             height: 60px;
             width: 640px;
@@ -251,7 +253,7 @@
 
         <form id="search-form" action="javascript:sendForm()">
             <div class="search">
-                <input type="text" placeholder="Search the Web or enter address" name="q_searc_textfield" class="round-search"
+                <input type="text" placeholder="Search the Web or enter address 1" name="q_searc_textfield" class="round-search"
                        autocomplete="off" autocapitalize="off" autocorrect="off"
 		       style="color: #596677"
                        id="query-input"/>
