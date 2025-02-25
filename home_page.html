@@ -25,8 +25,7 @@
         }
 
         .round-search {
-            font-feature-settings: "liga" 0, "kern" 1;
-			font-variant-ligatures: no-common-ligatures;
+            text-rendering: optimizeSpeed;
 			margin-top: 56px;
             margin-bottom: 56px;
             height: 60px;
@@ -253,7 +252,7 @@
 
         <form id="search-form" action="javascript:sendForm()">
             <div class="search">
-                <input type="text" placeholder="Search the Web or enter address 1" name="q_searc_textfield" class="round-search"
+                <input type="text" placeholder="Search the Web or enter address" name="q_searc_textfield" class="round-search"
                        autocomplete="off" autocapitalize="off" autocorrect="off"
 		       style="color: #596677"
                        id="query-input"/>
