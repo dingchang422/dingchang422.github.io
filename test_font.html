@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Spacing Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .test-text {
+            font-size: 32px;
+            margin: 20px 0;
+            text-rendering: optimizeSpeed;
+            font-feature-settings: "liga" 0, "kern" 0;
+            letter-spacing: normal;
+        }
+        .custom-font {
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>Font Spacing Test</h1>
+    <p class="test-text">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p class="test-text">abcdefghijklmnopqrstuvwxyz</p>
+    <p class="test-text custom-font">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p class="test-text custom-font">abcdefghijklmnopqrstuvwxyz</p>
+</body>
+</html>
